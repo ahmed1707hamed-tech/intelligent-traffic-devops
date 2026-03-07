@@ -1,0 +1,20 @@
+services:
+
+  traffic-api:
+    build: ./services/traffic-data-service
+    container_name: traffic-api
+
+  dashboard:
+    build: ./services/traffic-dashboard
+    container_name: traffic-dashboard
+
+  nginx:
+    image: nginx:alpine
+    container_name: traffic-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - dashboard
+      - traffic-api

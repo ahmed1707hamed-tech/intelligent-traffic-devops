@@ -1,0 +1,10 @@
+location,time,vehicle_count
+Main Street,08:00,120
+Main Street,09:00,200
+Main Street,10:00,180
+Second Ave,08:00,80
+Second Ave,09:00,150
+Second Ave,10:00,170
+Third Road,08:00,60
+Third Road,09:00,140
+Third Road,10:00,160
