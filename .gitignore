@@ -5,3 +5,7 @@ node_modules
 .DS_Store
 *.log
 *.pem
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.exe
