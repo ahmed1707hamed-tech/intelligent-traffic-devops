@@ -1,0 +1,40 @@
+- hosts: web
+  become: yes
+
+  tasks:
+
+  - name: update packages
+    yum:
+      name: "*"
+      state: latest
+
+  - name: install docker
+    yum:
+      name: docker
+      state: present
+
+  - name: start docker
+    service:
+      name: docker
+      state: started
+      enabled: true
+
+  - name: install git
+    yum:
+      name: git
+      state: present
+
+  - name: enable nginx repo
+    command: amazon-linux-extras install nginx1 -y
+
+  - name: start nginx
+    service:
+      name: nginx
+      state: started
+      enabled: true
+
+  - name: add ec2-user to docker group
+    user:
+      name: ec2-user
+      groups: docker
+      append: yes
