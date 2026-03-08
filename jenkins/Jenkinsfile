@@ -1,13 +1,8 @@
+
 pipeline {
     agent any
 
     stages {
-
-        stage('Clone Repo') {
-            steps {
-                git 'https://github.com/ahmed1707hamed-tech/intelligent-traffic-devops'
-            }
-        }
 
         stage('Build Containers') {
             steps {
