@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traffic-nginx
+  template:
+    metadata:
+      labels:
+        app: traffic-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80

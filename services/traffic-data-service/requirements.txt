@@ -1,3 +1,4 @@
 fastapi
 uvicorn
 pandas
+prometheus-fastapi-instrumentator

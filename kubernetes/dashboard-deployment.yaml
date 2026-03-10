@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traffic-dashboard
+  template:
+    metadata:
+      labels:
+        app: traffic-dashboard
+    spec:
+      containers:
+      - name: traffic-dashboard
+        image: ahmed7amed9/traffic-dashboard:latest
+        ports:
+        - containerPort: 80
