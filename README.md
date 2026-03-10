@@ -1,136 +1,231 @@
 # 🚦 Intelligent Traffic Management DevOps Project
 
-A complete **DevOps-based traffic monitoring platform** that simulates traffic sensor data, processes it through backend services, and visualizes system and traffic metrics in real time.
+A complete DevOps-based traffic monitoring platform that simulates traffic sensor data, processes it through backend services, and visualizes traffic analytics in real time.
 
-This project demonstrates **end-to-end DevOps practices** including infrastructure provisioning, containerization, CI/CD pipelines, Kubernetes deployment, and monitoring.
+This project demonstrates a full DevOps workflow including infrastructure provisioning, containerization, CI/CD automation, Kubernetes orchestration, and monitoring.
 
 ---
 
 # 🏗️ System Architecture
 
-The following diagram shows the overall architecture of the system.
+The following diagram illustrates the overall architecture of the system.
 
 ![Architecture](docs/images/arch.png)
 
-The workflow of the project:
+Workflow:
 
-Developer → GitHub → Jenkins CI/CD → Docker → Kubernetes → Monitoring (Prometheus & Grafana)
-
----
-
-# ⚙️ Technologies Used
-
-| Category | Tools |
-|--------|------|
-| Containerization | Docker |
-| Orchestration | Kubernetes |
-| CI/CD | Jenkins |
-| Infrastructure as Code | Terraform |
-| Configuration Management | Ansible |
-| Monitoring | Prometheus & Grafana |
-| Cloud | AWS EC2 |
-| Backend | FastAPI |
-| Reverse Proxy | Nginx |
-| Version Control | Git & GitHub |
+Developer → GitHub → Jenkins CI/CD → Docker → Kubernetes → Prometheus → Grafana
 
 ---
 
-# 🚀 Infrastructure Provisioning (Ansible)
+# ⚙️ Tech Stack
 
-Automated server setup and configuration using **Ansible Playbooks**.
+Backend: Python (FastAPI)
 
-![Ansible Setup](docs/images/ansible-setup.png)
+Frontend: HTML / CSS / JavaScript
+
+Containerization: Docker
+
+Orchestration: Kubernetes
+
+CI/CD: Jenkins
+
+Infrastructure as Code: Terraform
+
+Configuration Management: Ansible
+
+Monitoring: Prometheus & Grafana
+
+Cloud Provider: AWS EC2
+
+Reverse Proxy: Nginx
+
+Version Control: Git & GitHub
+
+---
+
+# ⚙️ Setup & Running
+
+Install dependencies:
+
+cd services/traffic-api
+pip install fastapi uvicorn
+
+Start backend locally:
+
+uvicorn main:app --reload --port 8000
+
+Run with environment variable (optional):
+
+$env:ENV="Staging"; uvicorn main:app --reload
+
+Run dashboard:
+
+Open the following file in your browser:
+
+services/dashboard/index.html
+
+---
+
+# ☁️ Infrastructure Deployment
+
+Provision infrastructure using Terraform:
+
+cd terraform
+
+terraform init
+terraform plan
+terraform apply
+
+Terraform provisions the required infrastructure components such as EC2 instances and networking.
+
+---
+
+Configure servers using Ansible:
+
+cd ansible
+
+ansible-playbook setup.yml
 
 Ansible automates:
 
-- Docker installation
-- Nginx installation
-- Git installation
-- Server configuration
-- Service enablement
+Docker installation  
+Nginx installation  
+Git installation  
+Server configuration  
 
 ---
 
-# 📊 Traffic Monitoring Dashboard
+Deploy application to Kubernetes:
 
-A real-time dashboard showing traffic congestion statistics and traffic flow analytics.
+cd kubernetes
 
-![Traffic Dashboard](docs/images/traffic-dashboard.png)
-
-The dashboard displays:
-
-- Total processed vehicles
-- Traffic congestion rate
-- Traffic flow analytics
-- Traffic trends across locations
+kubectl apply -f .
 
 ---
 
-# 🔗 Backend API (FastAPI)
+Verify deployment:
 
-The backend service is built with **FastAPI** and provides traffic data through REST APIs.
+kubectl get pods
 
-![FastAPI Docs](docs/images/fastapi-docs.png)
+kubectl get svc
 
-Main endpoints:
+You should see running services such as:
 
+traffic-api  
+traffic-dashboard  
+nginx-proxy  
 
 ---
 
-# 📈 Prometheus Monitoring
+# 📊 Monitoring & Observability
+
+Monitoring is implemented using Prometheus and Grafana.
 
 Prometheus collects metrics from:
 
-- Traffic API
-- EC2 Node Exporter
-- System services
+Traffic API  
+Node Exporter  
+System services  
+
+---
+
+Prometheus Targets Screenshot
 
 ![Prometheus Targets](docs/images/prometheus-targets.png)
 
-Metrics collected include:
+Access Prometheus:
 
-- API request metrics
-- System resource usage
-- Traffic processing metrics
+http://<server-ip>:9090
 
 ---
 
-# 📉 Grafana Metrics Visualization
+Grafana Dashboard
 
-Grafana dashboards visualize the metrics collected by Prometheus.
+Grafana visualizes system and application metrics collected by Prometheus.
 
-![Grafana Metrics](docs/images/grafana-metrics.png)
+The dashboard shows:
 
-Dashboards include:
+CPU usage  
+Memory consumption  
+API request metrics  
+Traffic analytics  
 
-- Traffic metrics
-- Request monitoring
-- Performance analytics
+![Grafana Dashboard](docs/images/grafana-metrics.png)
 
----
+Access Grafana:
 
-# 🖥️ Node Exporter Dashboard
-
-Server monitoring dashboard displaying CPU, memory, and disk usage.
-
-![Node Exporter](docs/images/node-exporter-dashboard.png)
-
-This helps monitor system health and infrastructure performance.
+http://<server-ip>:3000
 
 ---
 
-# ☸️ Kubernetes Deployment
+Traffic Monitoring Dashboard
 
-Application services are deployed using **Kubernetes**.
+The dashboard displays traffic congestion analytics and traffic flow metrics in real time.
 
-Deployed services:
+![Traffic Dashboard](docs/images/traffic-dashboard.png)
 
-- Traffic API
-- Traffic Dashboard
-- Nginx Reverse Proxy
+Dashboard features:
 
-Example commands:
+Traffic congestion insights  
+Vehicle processing metrics  
+Traffic flow statistics  
+Real-time analytics visualization  
 
-```bash
-kubectl get pods
-kubectl get services
+---
+
+# 🔄 CI/CD Pipeline
+
+The CI/CD pipeline is implemented using Jenkins.
+
+Pipeline workflow:
+
+1 Pull source code from GitHub  
+2 Build Docker images  
+3 Push images to container registry  
+4 Deploy to Kubernetes cluster  
+5 Monitor services using Prometheus and Grafana  
+
+This pipeline ensures automated, reliable, and scalable deployments.
+
+---
+
+# 📂 Project Structure
+
+intelligent-traffic-devops
+
+ansible  
+kubernetes  
+monitoring  
+services  
+terraform  
+
+docs  
+images  
+
+README.md
+
+---
+
+# Conclusion
+
+This project demonstrates the implementation of a complete DevOps workflow through building and deploying an Intelligent Traffic Management System.
+
+The system simulates traffic data processing and provides real-time visualization through a traffic monitoring dashboard. The backend service was developed using FastAPI, while the frontend dashboard was built using lightweight web technologies including HTML, CSS, and JavaScript.
+
+Throughout the development process, several DevOps practices were applied. The application services were containerized using Docker, automated builds and deployments were implemented using Jenkins CI/CD pipelines, and the services were orchestrated using Kubernetes for scalability and reliability.
+
+Infrastructure provisioning was automated using Terraform, while server configuration and environment setup were managed using Ansible. In addition, monitoring and observability were implemented using Prometheus and Grafana to track system performance and service health.
+
+The goal of this project was to simulate a real-world DevOps environment and demonstrate practical skills in building, deploying, and managing cloud-native applications using modern DevOps tools.
+
+---
+
+# 👨‍💻 Author
+
+Ahmed Hamed
+
+DevOps & Cloud Engineer
+
+GitHub:
+https://github.com/ahmed1707hamed-tech
