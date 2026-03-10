@@ -8,13 +8,11 @@ This project demonstrates a full DevOps workflow including infrastructure provis
 
 # 🏗️ System Architecture
 
-The following diagram illustrates the overall architecture of the system.
-
 ![Architecture](docs/images/arch.png)
 
 Workflow:
 
-Developer → GitHub → Jenkins CI/CD → Docker → Kubernetes → Prometheus → Grafana
+Developer → GitHub → Jenkins → Docker → Kubernetes → Prometheus → Grafana
 
 ---
 
@@ -46,71 +44,77 @@ Version Control: Git & GitHub
 
 # ⚙️ Setup & Running
 
-Install dependencies:
+Install dependencies
+
+
+
 
 cd services/traffic-api
 pip install fastapi uvicorn
 
-Start backend locally:
+
+Start backend
+
+
+
 
 uvicorn main:app --reload --port 8000
 
-Run with environment variable (optional):
 
-$env:ENV="Staging"; uvicorn main:app --reload
+Run dashboard
 
-Run dashboard:
+Open:
 
-Open the following file in your browser:
+
 
 services/dashboard/index.html
+
 
 ---
 
 # ☁️ Infrastructure Deployment
 
-Provision infrastructure using Terraform:
-
+Provision infrastructure using Terraform
 cd terraform
 
 terraform init
 terraform plan
 terraform apply
 
-Terraform provisions the required infrastructure components such as EC2 instances and networking.
 
 ---
 
-Configure servers using Ansible:
+Configure servers using Ansible
+
+
 
 cd ansible
 
 ansible-playbook setup.yml
 
-Ansible automates:
-
-Docker installation  
-Nginx installation  
-Git installation  
-Server configuration  
 
 ---
 
-Deploy application to Kubernetes:
+Deploy application to Kubernetes
+
+
 
 cd kubernetes
 
 kubectl apply -f .
 
+
 ---
 
-Verify deployment:
+Verify deployment
+
+
 
 kubectl get pods
-
 kubectl get svc
 
-You should see running services such as:
+
+Expected services
 
 traffic-api  
 traffic-dashboard  
@@ -118,92 +122,110 @@ nginx-proxy
 
 ---
 
-# 📊 Monitoring & Observability
+# 📊 API Documentation (FastAPI)
 
-Monitoring is implemented using Prometheus and Grafana.
+The backend API is built using FastAPI and exposes endpoints for traffic analytics.
 
-Prometheus collects metrics from:
+![FastAPI Docs](docs/images/fastapi-docs.png)
 
-Traffic API  
-Node Exporter  
-System services  
+Main endpoints
+
+
+
+/traffic
+/traffic/congestion
+/metrics
+
 
 ---
 
-Prometheus Targets Screenshot
+# 📈 Prometheus Monitoring
+
+Prometheus collects metrics from the API and system exporters.
 
 ![Prometheus Targets](docs/images/prometheus-targets.png)
 
-Access Prometheus:
+Access Prometheus
 
-http://<server-ip>:9090
+
+
+http://50.19.101.138:9090
+
 
 ---
 
-Grafana Dashboard
+# 📊 Grafana Dashboard
 
-Grafana visualizes system and application metrics collected by Prometheus.
+Grafana visualizes metrics collected by Prometheus.
 
-The dashboard shows:
-
-CPU usage  
-Memory consumption  
-API request metrics  
-Traffic analytics  
+The dashboards display system performance and traffic analytics.
 
 ![Grafana Dashboard](docs/images/grafana-metrics.png)
 
-Access Grafana:
-
-http://<server-ip>:3000
+Access Grafana
+http://50.19.101.138:3000
 
 ---
 
-Traffic Monitoring Dashboard
+# 🖥️ Node Exporter Dashboard
 
-The dashboard displays traffic congestion analytics and traffic flow metrics in real time.
+Node Exporter is used to monitor server resources.
+
+Metrics include:
+
+CPU usage  
+Memory usage  
+Disk usage  
+
+![Node Exporter Dashboard](docs/images/node-exporter-dashboard.png)
+
+---
+
+# 🚦 Traffic Monitoring Dashboard
+
+The frontend dashboard displays traffic congestion analytics.
 
 ![Traffic Dashboard](docs/images/traffic-dashboard.png)
 
-Dashboard features:
+Dashboard features
 
-Traffic congestion insights  
+Traffic congestion statistics  
 Vehicle processing metrics  
-Traffic flow statistics  
-Real-time analytics visualization  
+Traffic flow analytics  
+Real-time visualization  
 
 ---
 
 # 🔄 CI/CD Pipeline
 
-The CI/CD pipeline is implemented using Jenkins.
+CI/CD pipeline implemented using Jenkins.
 
-Pipeline workflow:
+Pipeline workflow
 
 1 Pull source code from GitHub  
 2 Build Docker images  
-3 Push images to container registry  
-4 Deploy to Kubernetes cluster  
-5 Monitor services using Prometheus and Grafana  
+3 Push images  
+4 Deploy to Kubernetes  
+5 Monitor services using Prometheus & Grafana  
 
-This pipeline ensures automated, reliable, and scalable deployments.
+This ensures automated and reliable deployments.
 
 ---
 
 # 📂 Project Structure
 
+
+
 intelligent-traffic-devops
 
-ansible  
-kubernetes  
-monitoring  
-services  
-terraform  
+ansible
+kubernetes
+monitoring
+services
+terraform
 
-docs  
-images  
-
-README.md
+docs
+images
 
 ---
 
@@ -211,13 +233,15 @@ README.md
 
 This project demonstrates the implementation of a complete DevOps workflow through building and deploying an Intelligent Traffic Management System.
 
-The system simulates traffic data processing and provides real-time visualization through a traffic monitoring dashboard. The backend service was developed using FastAPI, while the frontend dashboard was built using lightweight web technologies including HTML, CSS, and JavaScript.
+The system simulates traffic data processing and provides real-time visualization through a traffic monitoring dashboard. The backend service was developed using FastAPI, while the frontend dashboard was built using HTML, CSS, and JavaScript.
 
-Throughout the development process, several DevOps practices were applied. The application services were containerized using Docker, automated builds and deployments were implemented using Jenkins CI/CD pipelines, and the services were orchestrated using Kubernetes for scalability and reliability.
+Several DevOps practices were applied including containerization with Docker, automated CI/CD pipelines with Jenkins, and orchestration with Kubernetes.
 
-Infrastructure provisioning was automated using Terraform, while server configuration and environment setup were managed using Ansible. In addition, monitoring and observability were implemented using Prometheus and Grafana to track system performance and service health.
+Infrastructure provisioning was automated using Terraform, while server configuration was handled using Ansible.
 
-The goal of this project was to simulate a real-world DevOps environment and demonstrate practical skills in building, deploying, and managing cloud-native applications using modern DevOps tools.
+Monitoring and observability were implemented using Prometheus and Grafana to track system performance and service health.
+
+This project demonstrates practical experience in building and managing scalable cloud-native applications using modern DevOps tools.
 
 ---
 
@@ -227,5 +251,8 @@ Ahmed Hamed
 
 DevOps & Cloud Engineer
 
-GitHub:
+GitHub
+
 https://github.com/ahmed1707hamed-tech
+
+
