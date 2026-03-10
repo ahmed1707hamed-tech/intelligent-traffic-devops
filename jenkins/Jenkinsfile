@@ -1,64 +1,61 @@
 pipeline {
-agent any
+    agent any
 
-```
-stages {
+    stages {
 
-    stage('Checkout Code') {
-        steps {
-            git branch: 'main', url: 'https://github.com/ahmed1707hamed-tech/intelligent-traffic-devops.git'
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ahmed1707hamed-tech/intelligent-traffic-devops.git'
+            }
+        }
+
+        stage('Check Project Structure') {
+            steps {
+                sh 'ls -la'
+                sh 'ls -la services'
+            }
+        }
+
+        stage('Build Dashboard Image') {
+            steps {
+                sh 'docker build -t traffic-dashboard ./services/traffic-dashboard'
+            }
+        }
+
+        stage('Build Backend Image') {
+            steps {
+                sh '''
+                if [ -d ./services/traffic-data-service ]; then
+                    docker build -t traffic-backend ./services/traffic-data-service
+                else
+                    echo "Backend folder not found, skipping build"
+                fi
+                '''
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f kubernetes/'
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                sh 'kubectl get pods'
+                sh 'kubectl get services'
+            }
+        }
+
+    }
+
+    post {
+        success {
+            echo "Pipeline completed successfully 🚀"
+        }
+
+        failure {
+            echo "Pipeline failed ❌"
         }
     }
-
-    stage('Check Project Structure') {
-        steps {
-            sh 'ls -la'
-            sh 'ls -la services'
-        }
-    }
-
-    stage('Build Dashboard Image') {
-        steps {
-            sh 'docker build -t traffic-dashboard ./services/traffic-dashboard'
-        }
-    }
-
-    stage('Build Backend Image') {
-        steps {
-            sh '''
-            if [ -d ./services/traffic-data-service ]; then
-                docker build -t traffic-backend ./services/traffic-data-service
-            else
-                echo "Backend folder not found, skipping build"
-            fi
-            '''
-        }
-    }
-
-    stage('Deploy to Kubernetes') {
-        steps {
-            sh 'kubectl apply -f kubernetes/'
-        }
-    }
-
-    stage('Verify Deployment') {
-        steps {
-            sh 'kubectl get pods'
-            sh 'kubectl get services'
-        }
-    }
-
-}
-
-post {
-    success {
-        echo "Pipeline completed successfully 🚀"
-    }
-
-    failure {
-        echo "Pipeline failed ❌"
-    }
-}
-```
-
 }
