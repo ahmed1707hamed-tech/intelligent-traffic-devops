@@ -88,7 +88,7 @@ Grafana is used to visualize metrics collected by Prometheus.
 
 The dashboards display system performance, API metrics, and infrastructure health.
 
-![Grafana Dashboard](docs/images/grafana-metrics.png)
+![Grafana Dashboard](docs/images/grafana.png)
 
 Access Grafana
 http://50.19.101.138:3000
@@ -236,6 +236,7 @@ DevOps & Cloud Engineer
 
 GitHub  
 https://github.com/ahmed1707hamed-tech
+
 
 
 
