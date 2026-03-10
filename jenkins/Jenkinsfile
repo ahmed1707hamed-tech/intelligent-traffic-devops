@@ -1,43 +1,88 @@
 pipeline {
-    agent any
+agent any
 
-    stages {
+```
+environment {
+    DOCKER_USER = "YOUR_DOCKERHUB_USERNAME"
+    BACKEND_IMAGE = "traffic-data-service"
+    FRONTEND_IMAGE = "traffic-dashboard"
+}
 
-        stage('Check Files') {
-            steps {
-                sh 'ls -la'
-            }
+stages {
+
+    stage('Checkout Code') {
+        steps {
+            git branch: 'main', url: 'https://github.com/ahmed1707hamed-tech/intelligent-traffic-devops.git'
         }
+    }
 
-        stage('Check Services') {
-            steps {
-                sh 'ls -la services'
-            }
+    stage('Check Project Structure') {
+        steps {
+            sh 'ls -la'
+            sh 'ls -la services'
         }
+    }
 
-        stage('Build Dashboard Image') {
-            steps {
-                sh 'docker build -t traffic-dashboard ./services/traffic-dashboard'
-            }
+    stage('Build Frontend Image') {
+        steps {
+            sh '''
+            docker build -t $DOCKER_USER/$FRONTEND_IMAGE:latest ./services/traffic-dashboard
+            '''
         }
+    }
 
-        stage('Build Backend Image') {
-            steps {
+    stage('Build Backend Image') {
+        steps {
+            sh '''
+            docker build -t $DOCKER_USER/$BACKEND_IMAGE:latest ./services/traffic-data-service
+            '''
+        }
+    }
+
+    stage('Push Images to DockerHub') {
+        steps {
+            withCredentials([usernamePassword(
+                credentialsId: 'dockerhub',
+                usernameVariable: 'DOCKER_USERNAME',
+                passwordVariable: 'DOCKER_PASSWORD'
+            )]) {
                 sh '''
-                if [ -d "./services/traffic-backend" ]; then
-                    docker build -t traffic-backend ./services/traffic-backend
-                else
-                    echo "Backend folder not found, skipping build"
-                fi
+                echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                docker push $DOCKER_USER/$FRONTEND_IMAGE:latest
+                docker push $DOCKER_USER/$BACKEND_IMAGE:latest
                 '''
             }
         }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                sh 'kubectl apply -f kubernetes/'
-            }
-        }
-
     }
+
+    stage('Deploy to Kubernetes') {
+        steps {
+            sh '''
+            kubectl apply -f kubernetes/
+            kubectl rollout restart deployment traffic-dashboard
+            kubectl rollout restart deployment traffic-backend
+            '''
+        }
+    }
+
+    stage('Verify Deployment') {
+        steps {
+            sh 'kubectl get pods'
+            sh 'kubectl get services'
+        }
+    }
+
+}
+
+post {
+    success {
+        echo "CI/CD Pipeline completed successfully 🚀"
+    }
+
+    failure {
+        echo "Pipeline failed ❌"
+    }
+}
+```
+
 }
