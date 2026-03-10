@@ -146,29 +146,28 @@ cd terraform
 terraform init
 terraform plan
 terraform apply
-
----
-
-Configure servers using Ansible
+```
+## Configure servers using Ansible
+```bash
 cd ansible
-
 ansible-playbook setup.yml
+```
 
 ---
 
-Deploy application to Kubernetes
-
-
+## Deploy application to Kubernetes
+```bash
 
 cd kubernetes
-
 kubectl apply -f .
-
+```
 ---
 
-Verify deployment
+## Verify deployment
+```bash
 kubectl get pods
 kubectl get svc
+```
 
 Expected services
 
@@ -196,7 +195,7 @@ This ensures automated and reliable deployments.
 
 # 📂 Project Structure
 
-
+```bash
 
 intelligent-traffic-devops
 
@@ -210,7 +209,7 @@ docs
 images
 
 README.md
-
+```
 ---
 
 # Conclusion
@@ -237,6 +236,7 @@ DevOps & Cloud Engineer
 
 GitHub  
 https://github.com/ahmed1707hamed-tech
+
 
 
 
