@@ -3,22 +3,27 @@ pipeline {
 
     stages {
 
-        stage('Clone Repo') {
+        stage('Check Files') {
             steps {
-                git branch: 'main', url: 'https://github.com/ahmed1707hamed-tech/intelligent-traffic-devops.git'
+                sh 'ls -la'
             }
         }
 
-        stage('Build Docker Images') {
+        stage('Build Dashboard Image') {
             steps {
-                sh 'docker build -t traffic-backend ./backend'
-                sh 'docker build -t traffic-dashboard ./frontend'
+                sh 'docker build -t traffic-dashboard ./services/traffic-dashboard'
+            }
+        }
+
+        stage('Build Backend Image') {
+            steps {
+                sh 'docker build -t traffic-backend ./services/traffic-backend'
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f k8s/'
+                sh 'kubectl apply -f kubernetes/'
             }
         }
 
