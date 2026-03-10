@@ -3,15 +3,22 @@ pipeline {
 
     stages {
 
-        stage('Deploy') {
+        stage('Clone Repo') {
             steps {
-                sh '''
-                ssh -i /var/jenkins_home/traffic-key.pem -o StrictHostKeyChecking=no ec2-user@50.19.101.138 "
-                cd intelligent-traffic-devops &&
-                docker-compose down &&
-                docker-compose up -d --build
-                "
-                '''
+                git 'https://github.com/ahmed1707hamed-tech/intelligent-traffic-devops.git'
+            }
+        }
+
+        stage('Build Docker Images') {
+            steps {
+                sh 'docker build -t traffic-backend ./backend'
+                sh 'docker build -t traffic-dashboard ./frontend'
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f k8s/'
             }
         }
 
