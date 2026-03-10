@@ -139,9 +139,10 @@ services/dashboard/index.html
 
 # ☁️ Infrastructure Deployment
 
-Provision infrastructure using Terraform
-cd terraform
+## Provision infrastructure using Terraform
 
+```bash
+cd terraform
 terraform init
 terraform plan
 terraform apply
@@ -236,6 +237,7 @@ DevOps & Cloud Engineer
 
 GitHub  
 https://github.com/ahmed1707hamed-tech
+
 
 
 
