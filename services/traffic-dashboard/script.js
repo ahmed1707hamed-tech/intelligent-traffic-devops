@@ -3,7 +3,7 @@
  * Modular Code Structure based on DevOps requirements.
  */
 
-const API_URL = "/api/traffic";
+const API_URL = "/traffic";
 const POLLING_INTERVAL = 5000;
 
 // State management
