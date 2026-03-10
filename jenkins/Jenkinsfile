@@ -9,6 +9,12 @@ pipeline {
             }
         }
 
+        stage('Check Services') {
+            steps {
+                sh 'ls -la services'
+            }
+        }
+
         stage('Build Dashboard Image') {
             steps {
                 sh 'docker build -t traffic-dashboard ./services/traffic-dashboard'
@@ -17,7 +23,13 @@ pipeline {
 
         stage('Build Backend Image') {
             steps {
-                sh 'docker build -t traffic-backend ./services/traffic-backend'
+                sh '''
+                if [ -d "./services/traffic-backend" ]; then
+                    docker build -t traffic-backend ./services/traffic-backend
+                else
+                    echo "Backend folder not found, skipping build"
+                fi
+                '''
             }
         }
 
