@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website-visit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: website-visit
+  template:
+    metadata:
+      labels:
+        app: website-visit
+    spec:
+      containers:
+      - name: website-visit
+        image: YOUR_DOCKER_USERNAME/website-visit:latest
+        ports:
+        - containerPort: 3000
