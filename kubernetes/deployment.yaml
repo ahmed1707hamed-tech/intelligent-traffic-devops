@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: website-visit
+  name: traffic-dashboard   # بدل website-visit
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: website-visit
+      app: traffic-dashboard
   template:
     metadata:
       labels:
-        app: website-visit
+        app: traffic-dashboard
     spec:
       containers:
-      - name: website-visit
-        image: YOUR_DOCKER_USERNAME/website-visit:latest
+      - name: traffic-dashboard
+        image: ahmed7amed9/traffic-dashboard
         ports:
-        - containerPort: 3000
+        - containerPort: 80
